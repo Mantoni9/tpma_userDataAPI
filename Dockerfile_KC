@@ -1,0 +1,30 @@
+# Erster Schritt: Builder
+FROM quay.io/keycloak/keycloak:22.0.5 as builder
+
+# Health-Checks und Metriken aktivieren
+ENV KC_HEALTH_ENABLED=true
+ENV KC_METRICS_ENABLED=true
+
+# Datenbank konfigurieren
+ENV KC_DB=postgres
+
+WORKDIR /opt/keycloak
+RUN /opt/keycloak/bin/kc.sh build
+
+# Zweiter Schritt: Endprodukt
+FROM quay.io/keycloak/keycloak:latest
+
+# Dateien und Konfigurationen aus dem Builder kopieren
+COPY --from=builder /opt/keycloak/ /opt/keycloak/
+
+# Umgebungsvariablen setzen
+ENV KC_DB=postgres
+ENV KC_DB_URL_HOST=postgres
+ENV KC_DB_URL_DATABASE=keycloak_m2olie
+ENV KC_DB_USERNAME=keycloak_m2olie
+ENV KC_DB_PASSWORD=5hT9kL2oP7wQ3zX
+ENV KC_HOSTNAME_URL=https://keycloak.tpma-m2olie.de
+
+
+# Einstiegspunkt festlegen
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]

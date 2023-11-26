@@ -1,0 +1,8 @@
+{
+  "realm": "M2OLIE-AppAuthDev",
+  "auth-server-url": "http://keycloak:8080",
+  "resource": "m2olie_flutter_client",
+  "credentials": {
+    "secret": "e2JEBksIkspZGHsLcAvN9F1M26mZsPbe"
+  }
+}

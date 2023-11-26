@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "8090:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/userDataDatabase
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=pR1SmKfeHsU3
+    depends_on:
+      - db
+    networks:
+      - myNetwork
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=userDataDatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pR1SmKfeHsU3
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - myNetwork
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.5
+    command:
+      - start-dev
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB
+    ports:
+      - "8080:8080"
+    networks:
+      - myNetwork
+
+networks:
+  myNetwork:
+    external: true
+
+volumes:
+  db-data:
