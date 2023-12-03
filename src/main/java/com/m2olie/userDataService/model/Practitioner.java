@@ -1,5 +1,6 @@
 package com.m2olie.userDataService.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class Practitioner {
     private Long id;
     private Boolean active; // Whether this practitioner's record is in active use
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "practitioner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HumanName> names;
 
@@ -26,6 +28,7 @@ public class Practitioner {
     private Gender gender; // Gender of the practitioner
     private LocalDate birthDate; // Birth date of the practitioner
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "practitioner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses; // Address(es) of the practitioner
 

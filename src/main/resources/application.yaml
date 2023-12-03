@@ -1,10 +1,10 @@
 spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://keycloak:8080/realms/M2OLIE-AppAuthDev/protocol/openid-connect/certs
-          issuer-uri: http://keycloak:8080/realms/M2OLIE-AppAuthDev
+  #security:
+  #  oauth2:
+  #    resourceserver:
+  #      jwt:
+  #        jwk-set-uri: http://localhost:8080/realms/M2OLIE-AppAuthDev/protocol/openid-connect/certs
+  #        issuer-uri: http://localhost:8080/realms/M2OLIE-AppAuthDev
             # prod https://keycloak.tpma-m2olie.de/realms/M2OLIE-AppAuthDev
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://db:5432/userDataDatabase}
@@ -17,3 +17,8 @@ spring:
   sql:
     init:
       platform: postgres
+server:
+  port: 8090
+logging:
+  level:
+    web: debug

@@ -1,5 +1,6 @@
 package com.m2olie.userDataService.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,11 +11,24 @@ import java.util.List;
 public class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "practitioner_id")
     private Practitioner practitioner;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "contact_id")
+    private Contact contact;
+
     @Enumerated(EnumType.STRING)
     private AddressUse use; // e.g., home, work, temp, old, billing
     @Enumerated(EnumType.STRING)

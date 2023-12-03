@@ -1,5 +1,6 @@
 package com.m2olie.userDataService.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,9 +13,21 @@ public class HumanName {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "practitioner_id")
     private Practitioner practitioner;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "contact_id")
+    private Contact contact;
+
     @Enumerated(EnumType.STRING)
     private NameUse use; // enum for the use
     private String text; // full name as text
